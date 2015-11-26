@@ -1,4 +1,4 @@
-//Google Maps API key AIzaSyATO4CZr7qxhv4xpQnLF3AEi16CtPkP5rc
+//Initialize Google Map 
 
 var map;
 function initMap() {
