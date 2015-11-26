@@ -1,0 +1,28 @@
+{
+  "name": "neighborhood-map",
+  "homepage": "https://github.com/kortiz75/neighborhood-map",
+  "description": "Map of neighborhood",
+  "main": "index.html",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "neighborhood",
+    "map"
+  ],
+  "authors": [
+    "Katrina Ortiz"
+  ],
+  "license": "none",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "knockout": "~3.4.0"
+  }
+}
