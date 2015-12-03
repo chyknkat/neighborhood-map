@@ -6,4 +6,16 @@ html, body {
 
 #map {
 	height: 100%;
+	
+}
+
+#locations-list {
+	
+	
+	position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 30%;
+    
 }
