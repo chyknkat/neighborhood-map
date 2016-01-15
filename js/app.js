@@ -36,17 +36,18 @@ var initialLocations = [
 		lng: -80.1373629
 	}
 ];
-var location
+
 for(var i in initialLocations){
-	     location = initialLocations[i];
-	    var latLng = new google.maps.LatLng(location.lat, location.lng);
-	  	marker = new google.maps.Marker({
-			map: map,
-			animation: google.maps.Animation.DROP,
-			position: latLng
-	    });
-	    marker.addListener('click', toggleBounce);
-	};
+	
+	var latLng = new google.maps.LatLng(initialLocations[i].lat, initialLocations[i].lng);
+	marker = new google.maps.Marker({
+		map: map,
+		animation: google.maps.Animation.DROP,
+		position: latLng
+	});
+	marker.addListener('click', toggleBounce);
+};
+
 function toggleBounce() {
   if (marker.getAnimation() !== null) {
     marker.setAnimation(null);
