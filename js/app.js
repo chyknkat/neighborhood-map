@@ -9,7 +9,7 @@ function initMap() {
   });
 }
 
-var initialLocations = ko.observableArray([
+var initialLocations = [
 	{
 		locationName: "Funky Buddha",
 		lat: 26.1746495,
@@ -35,10 +35,10 @@ var initialLocations = ko.observableArray([
 		lat: 26.1185494,
 		lng: -80.1373629
 	}
-]);
-
-for(var i = 0; i < initialLocations().length; i++){
-	    var location = initialLocations()[i];
+];
+var location
+for(var i in initialLocations){
+	     location = initialLocations[i];
 	    var latLng = new google.maps.LatLng(location.lat, location.lng);
 	  	marker = new google.maps.Marker({
 			map: map,
@@ -68,7 +68,7 @@ var ViewModel = function (){
 
 	this.locationList = ko.observableArray([]);
 	
-	initialLocations().forEach(function(locationItem){
+	initialLocations.forEach(function(locationItem){
 		self.locationList.push (new Location(locationItem));
 	});
 	
