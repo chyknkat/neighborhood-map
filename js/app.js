@@ -28,7 +28,7 @@ var initialLocations = [
 	}
 ];
 
-var loc;
+
 var map;
 var marker;
 var latLng;
@@ -40,25 +40,29 @@ function initMap() {
     center: {lat: 26.138761, lng: -80.159683}
   });
   for(var i = 0; i < initialLocations.length; i++){
-  	loc = initialLocations[i];
+  	var loc = initialLocations[i];
   	latLng = new google.maps.LatLng(loc.lat, loc.lng);
   	marker = new google.maps.Marker({
   		animation: google.maps.Animation.DROP,
   		position: latLng
   	});
   	marker.setMap(map);
-	marker.addListener('click', toggleBounce);
+	marker.addListener('click', (function(locCopy) {
+		return function() {
+			toggleBounce(locCopy);
+		}
+	})(loc));
   }
 }
 
 
 function toggleBounce() {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
+	if (marker.getAnimation() !== null) {
+	   	marker.setAnimation(null);
+	} else {
+	  	marker.setAnimation(google.maps.Animation.BOUNCE);
+	}
+};
 
 var Location = function(data){
 	this.locationName = ko.observable(data.locationName);
