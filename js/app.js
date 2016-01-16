@@ -1,13 +1,4 @@
-//Initialize Google Map 
-var map;
-var marker
 
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
-    center: {lat: 26.138761, lng: -80.159683}
-  });
-}
 
 var initialLocations = [
 	{
@@ -37,16 +28,29 @@ var initialLocations = [
 	}
 ];
 
-for(var i in initialLocations){
-	
-	var latLng = new google.maps.LatLng(initialLocations[i].lat, initialLocations[i].lng);
-	marker = new google.maps.Marker({
-		map: map,
-		animation: google.maps.Animation.DROP,
-		position: latLng
-	});
+var loc;
+var map;
+var marker;
+var latLng;
+//Initialize Google Map 
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: {lat: 26.138761, lng: -80.159683}
+  });
+  for(var i = 0; i < initialLocations.length; i++){
+  	loc = initialLocations[i];
+  	latLng = new google.maps.LatLng(loc.lat, loc.lng);
+  	marker = new google.maps.Marker({
+  		animation: google.maps.Animation.DROP,
+  		position: latLng
+  	});
+  	marker.setMap(map);
 	marker.addListener('click', toggleBounce);
-};
+  }
+}
+
 
 function toggleBounce() {
   if (marker.getAnimation() !== null) {
