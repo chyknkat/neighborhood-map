@@ -47,20 +47,20 @@ function initMap() {
   		position: latLng
   	});
   	marker.setMap(map);
-	marker.addListener('click', (function(locCopy) {
-		return function() {
-			toggleBounce(locCopy);
-		}
-	})(loc));
+	marker.addListener('click', toggleBounce); 
   }
 }
 
 
 function toggleBounce() {
-	if (marker.getAnimation() !== null) {
-	   	marker.setAnimation(null);
+	var self = this;
+	if (this.getAnimation() !== null) {
+	   	this.setAnimation(null);
 	} else {
-	  	marker.setAnimation(google.maps.Animation.BOUNCE);
+	  	this.setAnimation(google.maps.Animation.BOUNCE);
+	  	setTimeout(function() {
+	  		self.setAnimation(null)
+	  	}, 3000);
 	}
 };
 
