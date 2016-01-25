@@ -98,20 +98,23 @@ var ViewModel = function (){
 	//sets the current location to the location clicked
 	this.setLocation = function (clickedLocation){
 		self.currentLocation(clickedLocation);
+		console.log("hi");
 	};
 
+	//Got help from Udacity Coach John for the search bar
 	//stores initial locations for search
 	this.places = ko.observableArray(initialLocations);
 
 	//sets up input string to be observed
 	this.query = ko.observable("");
-	
+
 	//searches through locations
 	this.search = ko.computed(function() {
-		return ko.utils.arrayFilter(self.places(), function(point) {
-			return point.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+		return ko.utils.arrayFilter(self.places(), function(place) {
+			return place.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
 		});
 	});
+
 }
 
 
