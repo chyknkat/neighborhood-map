@@ -8,13 +8,20 @@ html,body{
 }
 
 #map {
-	
     height: 100%;
     width: 80%;
 }
 
+#left-col {
+	display: flex;
+	flex-direction: column;
+}
+#searchbox {
+	height: 10%;
+	width: 100%;
+}
 #locations-list {
-	height: 100%;
-	width: 20%;
+	height: 80%;
+	width: 100%;
 }
 

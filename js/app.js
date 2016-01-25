@@ -1,28 +1,28 @@
 
-
+//Model array with initial locations
 var initialLocations = [
 	{
-		locationName: "Funky Buddha",
+		title: "Funky Buddha",
 		lat: 26.1746495,
 		lng: -80.1308203
 	},
 	{
-		locationName: "Museum of Discovery and Science",
+		title: "Museum of Discovery and Science",
 		lat: 26.1208918,
 		lng: -80.1479404
 	},
 	{
-		locationName: "New York Grilled Cheese",
+		title: "New York Grilled Cheese",
 		lat: 26.1564468,
 		lng: -80.1385884
 	},
 	{
-		locationName: "Broward Center for Performing Arts",
+		title: "Broward Center for Performing Arts",
 		lat: 26.1195189,
 		lng: -80.1490456
 	},
 	{
-		locationName: "Historic Stranahan House Museum",
+		title: "Historic Stranahan House Museum",
 		lat: 26.1185494,
 		lng: -80.1373629
 	}
@@ -32,13 +32,15 @@ var initialLocations = [
 var map;
 var marker;
 var latLng;
-//Initialize Google Map 
 
+//Initialize Google Map 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 13,
     center: {lat: 26.138761, lng: -80.159683}
   });
+
+  // Create markers for the initial locations
   for(var i = 0; i < initialLocations.length; i++){
   	var loc = initialLocations[i];
   	latLng = new google.maps.LatLng(loc.lat, loc.lng);
@@ -46,12 +48,18 @@ function initMap() {
   		animation: google.maps.Animation.DROP,
   		position: latLng
   	});
+
+  	//Link markers to map
   	marker.setMap(map);
+
+  	//Listener so that when markers are clicked, they bounce
 	marker.addListener('click', toggleBounce); 
   }
+  //Activate Knockout and link data bindings to the ViewModel
+  ko.applyBindings(new ViewModel());
 }
 
-
+//Bounce funtion for markers with 3 second timeout
 function toggleBounce() {
 	var self = this;
 	if (this.getAnimation() !== null) {
@@ -64,40 +72,48 @@ function toggleBounce() {
 	}
 };
 
+//Object for creating new locations
 var Location = function(data){
-	this.locationName = ko.observable(data.locationName);
+	this.title = ko.observable(data.title);
 	this.lat = ko.observable(data.lat);
 	this.lng = ko.observable(data.lng);
 	
 }
 
-
+//Object creating the ViewModel
 var ViewModel = function (){
 	var self = this;
 
+	//creates array for the locations to be held
 	this.locationList = ko.observableArray([]);
-	
+
+	//pushes the initial locations into the location list array as new Location objects
 	initialLocations.forEach(function(locationItem){
 		self.locationList.push (new Location(locationItem));
 	});
 	
-
+	//sets the current location to the first location in the locationList array
 	this.currentLocation = ko.observable(this.locationList()[0]);
 
+	//sets the current location to the location clicked
 	this.setLocation = function (clickedLocation){
 		self.currentLocation(clickedLocation);
 	};
+
+	//stores initial locations for search
+	this.places = ko.observableArray(initialLocations);
+
+	//sets up input string to be observed
+	this.query = ko.observable("");
+	
+	//searches through locations
+	this.search = ko.computed(function() {
+		return ko.utils.arrayFilter(self.places(), function(point) {
+			return point.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+		});
+	});
 }
 
-ko.applyBindings(new ViewModel());
 
 
-
-
-// Map markers
 // Search bar
-// 
-
-//model
-
-//var selectedLocation = ko.observable("Funky Buddha");
