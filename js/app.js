@@ -41,8 +41,10 @@ var initialLocations = [
 
 var map;
 var marker;
-var latLng;
 var markers = [];
+var latLng;
+//var infowindow;
+//var infowindows = [];
 
 //Initialize Google Map 
 function initMap() {
@@ -60,6 +62,10 @@ function initMap() {
   		position: latLng
   	});
 
+  	/*infowindow = new google.maps.InfoWindow({
+	    content: "Hi"
+	});*/
+
   	//Link markers to map
   	marker.setMap(map);
 
@@ -70,7 +76,15 @@ function initMap() {
 	markers.push(marker);
 
   	//Listener so that when markers are clicked, they bounce
-	marker.addListener('click', toggleBounce); 
+	marker.addListener('click', toggleBounce.bind(marker)); 
+
+	
+
+	//infowindows.push(infowindow);
+
+	/*marker.addListener('click', function() {
+	    infowindow.open(map, marker);
+	});*/
   }
   //Activate Knockout and link data bindings to the ViewModel
   ko.applyBindings(new ViewModel());
@@ -115,10 +129,11 @@ var ViewModel = function (){
 	//sets the current location to the first location in the locationList array
 	this.currentLocation = ko.observable(this.locationList()[0]);
 
-	//sets the current location to the location clicked
+	//Got help from Udacity Coach Heidi for binding toggleBounce
+	//sets the current location to the location clicked and binds marker bounce to location click
 	this.setLocation = function (clickedLocation){
 		self.currentLocation(clickedLocation);
-		//toggleBounce(clickedLocation.marker);
+		toggleBounce.call(clickedLocation.marker);
 		console.log("hi");
 	};
 
