@@ -4,27 +4,37 @@ var initialLocations = [
 	{
 		title: "Funky Buddha",
 		lat: 26.1746495,
-		lng: -80.1308203
+		lng: -80.1308203,
+		address: "1201 NE 38th St, Oakland Park, FL 33334",
+		visible: true
 	},
 	{
 		title: "Museum of Discovery and Science",
 		lat: 26.1208918,
-		lng: -80.1479404
+		lng: -80.1479404,
+		address: "401 SW 2nd St, Fort Lauderdale, FL 33312",
+		visible: true
 	},
 	{
 		title: "New York Grilled Cheese",
 		lat: 26.1564468,
-		lng: -80.1385884
+		lng: -80.1385884,
+		address: "2207 Wilton Dr, Wilton Manors, FL 33305",
+		visible: true
 	},
 	{
 		title: "Broward Center for Performing Arts",
 		lat: 26.1195189,
-		lng: -80.1490456
+		lng: -80.1490456,
+		address: "201 SW 5th Ave, Fort Lauderdale, FL 33312",
+		visible: true
 	},
 	{
 		title: "Historic Stranahan House Museum",
 		lat: 26.1185494,
-		lng: -80.1373629
+		lng: -80.1373629,
+		address: "335 SE 6th Ave, Fort Lauderdale, FL 33301",
+		visible: true
 	}
 ];
 
@@ -32,6 +42,7 @@ var initialLocations = [
 var map;
 var marker;
 var latLng;
+var markers = [];
 
 //Initialize Google Map 
 function initMap() {
@@ -52,6 +63,12 @@ function initMap() {
   	//Link markers to map
   	marker.setMap(map);
 
+  	//link markers to locations 
+	loc.marker = marker;
+
+	//push markers into array for later access
+	markers.push(marker);
+
   	//Listener so that when markers are clicked, they bounce
 	marker.addListener('click', toggleBounce); 
   }
@@ -68,7 +85,7 @@ function toggleBounce() {
 	  	this.setAnimation(google.maps.Animation.BOUNCE);
 	  	setTimeout(function() {
 	  		self.setAnimation(null)
-	  	}, 3000);
+	  	}, 2000);
 	}
 };
 
@@ -77,6 +94,9 @@ var Location = function(data){
 	this.title = ko.observable(data.title);
 	this.lat = ko.observable(data.lat);
 	this.lng = ko.observable(data.lng);
+	this.address = ko.observable(data.address);
+	this.visible = ko.observable(true);
+
 	
 }
 
@@ -98,8 +118,11 @@ var ViewModel = function (){
 	//sets the current location to the location clicked
 	this.setLocation = function (clickedLocation){
 		self.currentLocation(clickedLocation);
+		//toggleBounce(clickedLocation.marker);
 		console.log("hi");
 	};
+
+	
 
 	//Got help from Udacity Coach John for the search bar
 	//stores initial locations for search
@@ -108,15 +131,24 @@ var ViewModel = function (){
 	//sets up input string to be observed
 	this.query = ko.observable("");
 
-	//searches through locations
+	//searches through locations and displays searched marker
 	this.search = ko.computed(function() {
 		return ko.utils.arrayFilter(self.places(), function(place) {
-			return place.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+			if (place.title.toLowerCase().indexOf(self.query().toLowerCase()) >= 0) {
+				place.marker.setVisible(true);
+				return true;
+			} else {
+				place.marker.setVisible(false);
+				return false;
+			}
 		});
 	});
 
 }
 
 
-
-// Search bar
+//bounce marker with list item clicked
+// info window
+//api in info window
+//error handling
+//mobile version
