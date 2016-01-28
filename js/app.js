@@ -43,8 +43,8 @@ var map;
 var marker;
 var markers = [];
 var latLng;
-//var infowindow;
-//var infowindows = [];
+var infowindow;
+var infowindows = [];
 
 //Initialize Google Map 
 function initMap() {
@@ -62,9 +62,9 @@ function initMap() {
   		position: latLng
   	});
 
-  	/*infowindow = new google.maps.InfoWindow({
+  	infowindow = new google.maps.InfoWindow({
 	    content: "Hi"
-	});*/
+	});
 
   	//Link markers to map
   	marker.setMap(map);
@@ -76,15 +76,15 @@ function initMap() {
 	markers.push(marker);
 
   	//Listener so that when markers are clicked, they bounce
-	marker.addListener('click', toggleBounce.bind(marker)); 
+	marker.addListener('click', toggleBounce); 
 
-	
+	loc.infowindow = infowindow;
 
-	//infowindows.push(infowindow);
+	infowindows.push(infowindow);
 
-	/*marker.addListener('click', function() {
-	    infowindow.open(map, marker);
-	});*/
+	marker.addListener('click', function() {
+	    infowindow.open(map, this);
+	});
   }
   //Activate Knockout and link data bindings to the ViewModel
   ko.applyBindings(new ViewModel());
@@ -133,7 +133,8 @@ var ViewModel = function (){
 	//sets the current location to the location clicked and binds marker bounce to location click
 	this.setLocation = function (clickedLocation){
 		self.currentLocation(clickedLocation);
-		toggleBounce.call(clickedLocation.marker);
+		google.maps.event.trigger(clickedLocation.marker, 'click');
+		//toggleBounce.call(clickedLocation.marker);
 		console.log("hi");
 	};
 
