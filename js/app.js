@@ -212,7 +212,3 @@ var ViewModel = function (){
 
 }
 
-
-
-//api in info window
-//mobile version
