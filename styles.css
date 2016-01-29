@@ -5,26 +5,29 @@ html,body{
     padding: 0;
     display: flex;
   	flex-direction: row;
-  	
 }
 
 #map {
     height: 100%;
-    width: 80%;
+    width: 75%;
 }
 
 #left-col {
 	display: flex;
 	flex-direction: column;
 }
+
 #searchbox {
 	margin-top: 10px; 
 	margin-left: 10px;
 	height: 10%;
 	width: 90%;
 }
+
 #locations-list {
 	height: 80%;
 	width: 100%;
+	cursor: pointer;
+	list-style-type: none;
 }
 
