@@ -45,7 +45,7 @@ var markers = [];
 var latLng;
 var infowindow;
 var infowindows = [];
-var InfoWindowHTML;
+var infoWindowHTML;
 
 
 //Initialize Google Map 
@@ -117,7 +117,7 @@ function loadWikipedia(clickedMarker) {
 				url: url,
 				type: "POST",
 				dataType: "jsonp", 
-				headers: { 'Api-User-Agent': 'Katrina/1 (chykn75@yahoo.com)' },
+			
 				//displays Wikipedia info in infowindow
 				success: function(result){
 					if (result!== null) {
@@ -125,13 +125,13 @@ function loadWikipedia(clickedMarker) {
 					};
 			        //var object = JSON.parse(result);
 
-			        InfoWindowHTML = "WooHoo! Wikipedia";
+			        infoWindowHTML = "WooHoo! Wikipedia";
 			        createInfoWindow(clickedMarker);
 			    },
 			    //error handler for Wikipedia
 			    error: function(error) {
 			    	console.log("You suck" + error);
-			    	InfoWindowHTML = "Unable to connect to Wikipedia";
+			    	infoWindowHTML = "Unable to connect to Wikipedia";
 			    	createInfoWindow(clickedMarker);
 			    }
 			});
@@ -141,7 +141,7 @@ function loadWikipedia(clickedMarker) {
 
 //opens info window after Wikipedia loads
 function createInfoWindow(clickedMarker){
-	infowindow.setContent(InfoWindowHTML);
+	infowindow.setContent(infoWindowHTML);
 	infowindow.open(map, clickedMarker);
 }
 //Bounce funtion for markers with 1 second timeout
