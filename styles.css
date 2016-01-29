@@ -27,7 +27,10 @@ html,body{
 #locations-list {
 	height: 80%;
 	width: 100%;
+	padding: 10px;
 	cursor: pointer;
 	list-style-type: none;
+	flex-wrap: wrap;
+	text-align: left;
 }
 

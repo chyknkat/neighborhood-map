@@ -16,7 +16,7 @@ var initialLocations = [
 		
 	},
 	{
-		title: "Stonewall National Museum and Archives",
+		title: "Stonewall National Museum & Archives",
 		lat: 26.136952,
 		lng: -80.130058,
 		address: "1300 E Sunrise Blvd, Fort Lauderdale, FL 33304"
@@ -112,20 +112,19 @@ function loadWikipedia(clickedMarker) {
 	for (var i = 0; i < initialLocations.length; i++) {
 		if (initialLocations[i].lat == lat && initialLocations[i].lng == lng) {
 			//sends request to Wikipedia
-			var url = "https://en.wikipedia.org/w/api.php?action=query&titles=" + initialLocations[i].title + "&prop=revisions&rvprop=content&format=json"
+			var title = initialLocations[i].title;
+			var address = initialLocations[i].address;
+			var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + title + "&format=json&callback=wikiCallback"
+			
 			$.ajax({
 				url: url,
 				type: "POST",
 				dataType: "jsonp", 
 			
 				//displays Wikipedia info in infowindow
-				success: function(result){
-					if (result!== null) {
-						console.log(result);
-					};
-			        //var object = JSON.parse(result);
-
-			        infoWindowHTML = "WooHoo! Wikipedia";
+				success: function(response){
+			        var articleDescription = response[2][0];
+			        infoWindowHTML = "<h3>"+ title +"</h3>" + "<h4>"+ address +"</h4>" + "<h5>" + articleDescription + "</h5>" + "<a href='https://en.wikipedia.org/wiki/" + title +"'>Link to Wikipedia Page</a>";
 			        createInfoWindow(clickedMarker);
 			    },
 			    //error handler for Wikipedia
@@ -187,7 +186,6 @@ var ViewModel = function (){
 	this.setLocation = function (clickedLocation){
 		self.currentLocation(clickedLocation);
 		google.maps.event.trigger(clickedLocation.marker, 'click');
-		console.log("hi");
 	};
 
 	
