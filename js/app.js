@@ -115,23 +115,22 @@ function loadWikipedia(clickedMarker) {
 			var title = initialLocations[i].title;
 			var address = initialLocations[i].address;
 			var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + title + "&format=json&callback=wikiCallback"
-			
+			//error handler for Wikipedia
+			var wikiRequestTimeout = setTimeout(function() {
+				infoWindowHTML = "Unable to connect to Wikipedia";
+			    createInfoWindow(clickedMarker);
+			}, 8000);
 			$.ajax({
 				url: url,
 				type: "POST",
 				dataType: "jsonp", 
 			
-				//displays Wikipedia info in infowindow
+				//displays Wikipedia info in infowindow and clears error handler timeout
 				success: function(response){
 			        var articleDescription = response[2][0];
 			        infoWindowHTML = "<h3>"+ title +"</h3>" + "<h4>"+ address +"</h4>" + "<h5>" + articleDescription + "</h5>" + "<a href='https://en.wikipedia.org/wiki/" + title +"'>Link to Wikipedia Page</a>";
 			        createInfoWindow(clickedMarker);
-			    },
-			    //error handler for Wikipedia
-			    error: function(error) {
-			    	console.log("You suck" + error);
-			    	infoWindowHTML = "Unable to connect to Wikipedia";
-			    	createInfoWindow(clickedMarker);
+			        clearTimeout(wikiRequestTimeout);
 			    }
 			});
 		}
