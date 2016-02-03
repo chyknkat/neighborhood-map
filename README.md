@@ -1,5 +1,9 @@
 # Neighborhood Map
 
+## Purpose of Project
+
+To develop a single-page application featuring a map of a neighborhood. To add additional functionality to this application, including: map markers to identify popular locations or places you’d like to visit, a search function to easily discover these locations, and a listview to support simple browsing of all locations. To research and implement third-party APIs that provide additional information about each of these locations (such as StreetView images, Wikipedia articles, Yelp reviews, etc).
+
 ### To open through GitHub
 1. Navigate to http://kortiz75.github.io/neighborhood-map to open up the map site 
 2. Filter through list items and markers using search bar 
