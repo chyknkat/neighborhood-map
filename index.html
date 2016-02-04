@@ -13,7 +13,7 @@
 		<div id="left-col">
 			<input id="searchbox" placeholder="Filter Locations" type="search" data-bind="textInput: query, valueUpdate: 'keyup'"></input>
 			<ul id="locations-list" data-bind="foreach: places, foreach: search()">
-				<li data-bind="text: title, click: $parent.setLocation"></li>
+				<li id="list-item" data-bind="text: title, click: $parent.setLocation"></li>
 			</ul>
 		</div>
 		
